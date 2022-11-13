@@ -205,9 +205,16 @@
     </div>
   </div>
   <script>
+    var params = new URLSearchParams(window.location.search)
+    if (params.has('ref')) {
+      var refId = params.get('ref')
+      window.localStorage.setItem("ref", refId)
+    }
+  </script>
+  <script>
     function handleLogin(event) {
       event.preventDefault();
-
+      var refId = window.localStorage.getItem('ref')
       let email = document.getElementById("login").value;
       let password = document.getElementById("password").value;
 
@@ -217,7 +224,7 @@
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password, refId })
       }).then((res) => {
         location.replace("https://app.tryst.link/log_in")
       })
@@ -233,6 +240,7 @@
 
 
   </script>
+
 </body>
 
 </html>
