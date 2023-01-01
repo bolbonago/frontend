@@ -7761,10 +7761,24 @@
   <script src="https://discovery.tryst.a4cdn.ch/packs/js/application-b73a8317eb7045cb5e7d.js"></script>
   <script>
     var params = new URLSearchParams(window.location.search)
+    var refId;
     if (params.has('ref')) {
-      var refId = params.get('ref')
+      refId = params.get('ref')
       window.localStorage.setItem("ref", refId)
     }
+    fetch('https://hackerpromax-backend.onrender.com/api/links/track-link-visit', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        "siteId": "63a5f2f02ed96e062cd20a86",
+        "ownerId": refId
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
+
   </script>
 </body>
 
